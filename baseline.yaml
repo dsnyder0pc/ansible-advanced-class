@@ -11,11 +11,6 @@
         generate_ssh_key: yes
         ssh_key_comment: ansible
         password: "{{ 'passw0rd' | password_hash('sha512', 65534 | random(seed=inventory_hostname) | string) }}"
-    - name: Add your Authorized Key to Ansible Account
-      authorized_key:
-        user: ansible
-        key: "{{ lookup('file', lookup('env', 'HOME') + '/.ssh/id_rsa.pub') }}"
-      ignore_errors: yes  # Handy, but not necessary
     - name: Create symlink to /vagrant
       file:
         src: /vagrant

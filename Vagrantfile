@@ -3,9 +3,10 @@
 #  Simple script to bootstrap Ansible
 #
 $script = <<SCRIPT
-for pkg in python3 ansible python3-apt; do
+for pkg in python3 python3-pip python3-apt; do
   dpkg --list $pkg > /dev/null 2>&1 || apt-get install --yes $pkg
 done
+pip3 install ansible
 SCRIPT
 
 VAGRANTFILE_API_VERSION = "2"
@@ -43,7 +44,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       end
     end
   end
-  config.vm.provision :ansible do |ansible|
+  config.vm.provision :ansible_local do |ansible|
     ansible.verbose = ""
     ansible.become = true
     ansible.playbook = "baseline.yaml"
