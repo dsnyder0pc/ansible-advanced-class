@@ -12,9 +12,14 @@ https://www.udemy.com/course/learn-ansible-advanced/
 - run `vagrant up` to launch guests
 
 You'll start with three new virtual machines:
-- controller
-- db-and-web-server1
-- db-and-web-server2
+```
+$ vagrant status
+Current machine states:
+
+controller                running (virtualbox)
+db-and-web-server1        running (virtualbox)
+db-and-web-server2        running (virtualbox)
+```
 
 To use the controller for your Ansible work, you'll need to copy ssh keys to the other hosts. To do that, login to the controller with: `ssh ansible@192.168.77.71` (or `ssh ansible@controller`). Password is `passw0rd`
 
