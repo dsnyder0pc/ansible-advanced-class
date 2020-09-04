@@ -1,0 +1,51 @@
+########################################
+#
+#  Simple script to bootstrap Ansible
+#
+$script = <<SCRIPT
+for pkg in python3 ansible python3-apt; do
+  dpkg --list $pkg > /dev/null 2>&1 || apt-get install --yes $pkg
+done
+SCRIPT
+
+VAGRANTFILE_API_VERSION = "2"
+
+########################################
+#
+#  Define the hosts in our cluster
+#  Use a unique IP address for each
+#
+cluster = {
+# Hostname                  Unique IP Address
+# -------------------------------------------
+  "controler"           =>  "192.168.77.71",
+  "db-and-web-server1"  =>  "192.168.77.72",
+  "db-and-web-server2"  =>  "192.168.77.73",
+# -------------------------------------------
+}
+
+########################################
+#
+#  Bring up the cluster
+#  Assumes we have an Ansible
+#  playbook called baseline.yaml
+#
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.box = "debian/stretch64"
+  config.vm.provision :shell, inline: $script
+  cluster.each_with_index do |(hostname, address), index|
+    config.vm.define hostname do |node|
+      node.vm.provider :virtualbox do |vb, override|
+        vb.linked_clone = true
+        override.vm.hostname = hostname
+        override.vm.network :private_network, ip: address
+        vb.name = hostname
+      end
+    end
+  end
+  config.vm.provision :ansible do |ansible|
+    ansible.verbose = ""
+    ansible.become = true
+    ansible.playbook = "baseline.yaml"
+  end
+end

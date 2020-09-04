@@ -1,0 +1,22 @@
+---
+- name: Baseline Lab Setup
+  hosts: all
+  tasks:
+    - name: Create Ansible user
+      user:
+        name: ansible
+        system: yes
+        comment: "Ansible Runner"
+    - name: Add Your Authorized Key to Ansible Account
+      authorized_key:
+        user: ansible
+        key: "{{ lookup('file', lookup('env', 'HOME') + '/.ssh/id_rsa.pub') }}"
+    - name: Grant ansible User sudo Access (needed for become)
+      lineinfile:
+        path: /etc/sudoers.d/ansible
+        create: yes
+        line: "ansible ALL=(ALL) NOPASSWD: ALL"
+        validate: /usr/sbin/visudo -cf %s
+        owner: root
+        group: root
+        mode: '0440'

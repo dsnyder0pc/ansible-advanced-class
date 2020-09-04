@@ -1,0 +1,20 @@
+controller           ansible_host=192.168.77.71
+db-and-web-server1   ansible_host=192.168.77.72
+db-and-web-server2   ansible_host=192.168.77.73
+
+[db]
+db-and-web-server1
+db-and-web-server2
+
+[web]
+db-and-web-server1
+db-and-web-server2
+
+[debian]
+controller
+db-and-web-server1
+db-and-web-server2
+
+[debian:vars]
+ansible_user=ansible
+ansible_python_interpreter=/usr/bin/python3
