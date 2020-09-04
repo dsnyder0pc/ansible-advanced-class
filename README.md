@@ -16,9 +16,7 @@ You'll start with three new virtual machines:
 - db-and-web-server1
 - db-and-web-server2
 
-To use the controller for your Ansible work, you'll need to copy
-ssh keys to the other hosts. To do that, login to the controller
-with: `ssh ansible@192.168.77.71` (or `ssh ansible@controller`)
+To use the controller for your Ansible work, you'll need to copy ssh keys to the other hosts. To do that, login to the controller with: `ssh ansible@192.168.77.71` (or `ssh ansible@controller`). Password is `passw0rd`
 
 Once you are logged in, run: `class/copy-ssh-keys.sh`
 I've dropped a `class` symlink into the ansible user's homedir for your convenience. This provides convenient access to the invenotry and playboook files that you are working with on the host machine, presumably with a nice IDE. For this class, you'll be running `ansible-playbook` from the `class` folder on the `controller` host. For example:
