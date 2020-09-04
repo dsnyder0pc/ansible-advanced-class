@@ -18,7 +18,7 @@ VAGRANTFILE_API_VERSION = "2"
 cluster = {
 # Hostname                  Unique IP Address
 # -------------------------------------------
-  "controler"           =>  "192.168.77.71",
+  "controller"          =>  "192.168.77.71",
   "db-and-web-server1"  =>  "192.168.77.72",
   "db-and-web-server2"  =>  "192.168.77.73",
 # -------------------------------------------

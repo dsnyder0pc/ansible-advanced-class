@@ -7,10 +7,20 @@
         name: ansible
         system: yes
         comment: "Ansible Runner"
-    - name: Add Your Authorized Key to Ansible Account
+        shell: /bin/bash
+        generate_ssh_key: yes
+        ssh_key_comment: ansible
+        password: "{{ 'passw0rd' | password_hash('sha512', 65534 | random(seed=inventory_hostname) | string) }}"
+    - name: Add your Authorized Key to Ansible Account
       authorized_key:
         user: ansible
         key: "{{ lookup('file', lookup('env', 'HOME') + '/.ssh/id_rsa.pub') }}"
+    - name: Create symlink to /vagrant
+      file:
+        src: /vagrant
+        dest: /home/ansible/class
+        owner: ansible
+        state: link
     - name: Grant ansible User sudo Access (needed for become)
       lineinfile:
         path: /etc/sudoers.d/ansible
@@ -20,3 +30,16 @@
         owner: root
         group: root
         mode: '0440'
+    - name: Enable Password Authentication (for ssh-copy-id)
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: "^PasswordAuthentication"
+        line: "PasswordAuthentication yes"
+        state: present
+      notify:
+        - restart sshd
+  handlers:
+    - name: restart sshd
+      service:
+        name: sshd
+        state: restarted
