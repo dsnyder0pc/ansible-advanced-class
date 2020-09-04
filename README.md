@@ -7,6 +7,11 @@ https://www.udemy.com/course/learn-ansible-advanced/
 - (Windows users will want to install [Git](https://git-scm.com/download/win) as well)
 - Install Vagrant plugins: `vagrant plugin install vagrant-vbguest vagrant-hostsupdater`
 - (Windows users must give themselves modify access to the hosts file: `explorer 'C:\Windows\System32\Drivers\etc'`)
+- **Iimportant** Windows users: configure git line endigs as follows (from Git Bash):
+```
+   git config --global core.eol lf
+   git config --global core.autocrlf input
+```
 - Clone this repo: `git clone https://github.com/dsnyder0pc/ansible-advanced-class.git`
 - Change directory to the repo folder (eg., `cd ansible-advanced-class`)
 - run `vagrant up` to launch guests
