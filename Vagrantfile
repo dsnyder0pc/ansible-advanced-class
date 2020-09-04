@@ -3,6 +3,7 @@
 #  Simple script to bootstrap Ansible
 #
 $script = <<SCRIPT
+apt-get update
 for pkg in python3 python3-pip python3-apt; do
   dpkg --list $pkg > /dev/null 2>&1 || apt-get install --yes $pkg
 done
@@ -32,7 +33,7 @@ cluster = {
 #  playbook called baseline.yaml
 #
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box = "debian/stretch64"
+  config.vm.box = "ubuntu/bionic64"
   config.vm.provision :shell, inline: $script
   cluster.each_with_index do |(hostname, address), index|
     config.vm.define hostname do |node|
