@@ -5,6 +5,7 @@ https://www.udemy.com/course/learn-ansible-advanced/
 # Setup Steps
 - Install Virtualbox and Vagrant on your host machine
 - Clone this repo
+- Change directory to the repo folder (eg., `cd ansible-advanced-class`)
 - run `vagrant up` to launch guests
 
 You'll start with three new virtual machines:
