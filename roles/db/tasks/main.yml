@@ -7,6 +7,12 @@
     name: '{{ packages.mysql }}'
     state: present
   become: yes
+- name: Start MySQL
+  service:
+    name: mysql
+    state: started
+    enabled: yes
+  become: yes
 - name: Listen to public address
   lineinfile:
     path: /etc/mysql/mysql.conf.d/mysqld.cnf
@@ -16,12 +22,6 @@
   become: yes
   notify:
     - restart mysql
-- name: Start MySQL
-  service:
-    name: mysql
-    state: started
-    enabled: yes
-  become: yes
 - name: Create Application Database
   mysql_db:
     login_unix_socket: /var/run/mysqld/mysqld.sock
