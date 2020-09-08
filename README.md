@@ -22,8 +22,9 @@ $ vagrant status
 Current machine states:
 
 controller                running (virtualbox)
-db-and-web-server1        running (virtualbox)
-db-and-web-server2        running (virtualbox)
+db1                       running (virtualbox)
+web1                      running (virtualbox)
+web2                      running (virtualbox)
 ```
 
 To use the controller for your Ansible work, you'll need to copy ssh keys to the other hosts. To do that, login to the controller with: `ssh ansible@192.168.77.71` (or `ssh ansible@controller`). Password is `passw0rd`
@@ -32,5 +33,14 @@ Once you are logged in, run: `class/copy-ssh-keys.sh`
 I've dropped a `class` symlink into the ansible user's homedir for your convenience. This provides convenient access to the invenotry and playboook files that you are working with on the host machine, presumably with a nice IDE. For this class, you'll be running `ansible-playbook` from the `class` folder on the `controller` host. For example:
 ```
 ansible@controller:~$ cd class
-ansible@controller:~/class$ ansible-playbook demo1.yaml -i inventory.txt
+ansible@controller:~/class$ ansible-playbook playbook-13-01.yaml -i inventory.txt
+```
+
+IF there are no errors during the play, you should be able to test with curl:
+```
+$ echo $(curl -s web1:5000)
+Welcome!
+
+$ echo $(curl -s web2:5000)
+Welcome!
 ```
