@@ -30,10 +30,10 @@ web2                      running (virtualbox)
 To use the controller for your Ansible work, you'll need to copy ssh keys to the other hosts. To do that, login to the controller with: `ssh ansible@192.168.77.71` (or `ssh ansible@controller`). Password is `passw0rd`
 
 Once you are logged in, run: `class/copy-ssh-keys.sh`
-I've dropped a `class` symlink into the ansible user's homedir for your convenience. This provides convenient access to the invenotry and playboook files that you are working with on the host machine, presumably with a nice IDE. For this class, you'll be running `ansible-playbook` from the `class` folder on the `controller` host. For example:
+I've dropped a `class` symlink into the ansible user's homedir for your convenience. This provides convenient access to the invenotry and playboook files that you are working with on the host machine, presumably with a nice IDE. For this class, you'll be running `ansible-playbook` from the `class` folder on the `controller` host. For example (vault password is passw0rd:
 ```
 ansible@controller:~$ cd class
-ansible@controller:~/class$ ansible-playbook playbook-13-01.yaml -i inventory.txt
+ansible@controller:~/class$ ansible-playbook playbook-13-01.yaml -i inventory.txt --ask-vault-pass
 ```
 
 IF there are no errors during the play, you should be able to test with curl:
