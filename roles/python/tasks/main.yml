@@ -1,0 +1,15 @@
+---
+# tasks file for python
+- name: "Load package names for {{ ansible_distribution }}"
+  include_vars: "{{ ansible_distribution }}.yaml"
+- name: Install Dependencies
+  apt:
+    name: '{{ packages.base }}'
+    state: present
+  become: yes
+- name: Generate /etc/hosts file
+  template:
+    src: etc/hosts.j2
+    dest: /etc/hosts
+    mode: '0644'
+  become: yes

@@ -1,2 +1,17 @@
 ---
 # tasks file for web
+- name: "Load package names for {{ ansible_distribution }}"
+  include_vars: "{{ ansible_distribution }}.yaml"
+- name: Install Flask
+  pip:
+    name: '{{ packages.flask }}'
+    state: present
+  become: yes
+- name: Copy source code
+  get_url:
+    url: https://raw.githubusercontent.com/mmumshad/simple-webapp/master/app.py
+    dest: /opt/app.py
+    mode: 0555
+  become: yes
+- name: Start Application
+  shell: 'MYSQL_DATABASE_HOST=db1 FLASK_APP=/opt/app.py nohup flask run --host=0.0.0.0 < /dev/null > ~/app.log 2>&1 &'
